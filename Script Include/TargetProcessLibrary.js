@@ -31,6 +31,7 @@ TargetProcessLibrary.prototype = {
 
         this.sUserStoryCreate = gs.getProperty('PPB.integration.TargetProcess.UserStory.Create', '{"ResourceType":"UserStory","Name":${UserStoryName},"Description":${UserStoryDescription},"PlannedStartDate":${UserStoryPlannedStartDate},"PlannedEndDate":${UserStoryPlannedEndDate},"EntityType":{"Id":4,"Name":"UserStory"},"Project":${UserStoryProject},"Owner":${UserStoryOwner},"Team":${UserStoryTeam},"Priority":{"Id":5,"Name":"Nice To Have","Importance":5},"EntityState":${EntityState},"Feature":${UserStoryFeature},"CustomFields":[{"Name":"ServiceNow Task","Type":"URL","Value":{"Url":${UserStoryCustomSNTaskUrl},"Label":${UserStoryCustomSNTaskNumber}}},{"Name":"Security Review","Type":"CheckBox","Value":${UserStoryCustomSecurityReview}},{"Name":"Blocked Reason","Type":"Text","Value":${UserStoryCustomBlockedReason}},{"Name":"Compliance Requested","Type":"Date","Value":${UserStoryCustomComplianceRequested}},{"Name":"Compliance Approved","Type":"Date","Value":${UserStoryCustomComplianceApproved}},{"Name":"Compliance Expired","Type":"Date","Value":${UserStoryCustomComplianceExpired}}]}');
     },
+
     //*********************************************************************************************
     // User management commands
     //*********************************************************************************************
@@ -845,9 +846,9 @@ TargetProcessLibrary.prototype = {
     },
 
     //*********************************************************************************************
-	//
-	//*********************************************************************************************
-	createDeliveryTask : function(inRecord) {
+    //
+    //*********************************************************************************************
+    createDeliveryTask : function(inRecord) {
         var sFunctionName = 'createDeliveryTask';
         var macro = new TargetProcessMacro();
 
@@ -955,7 +956,7 @@ TargetProcessLibrary.prototype = {
         var sOwnerSysId, oOwner;
         var aDataBlock = [];
         var oSystem = this.libs.ppbGetRecord({"Table":"u_system","Query":"u_active=true^u_system_name=TargetProcess:" + inTargetSystem});
-		if ( JSUtil.notNil(oSystem.sys_id) ) {
+        if ( JSUtil.notNil(oSystem.sys_id) ) {
             this.aDebug.push(this._prefix(sFunctionName) + ' : Found a matching record for ' + inTargetSystem);
             var jResponseBody = {"Next":"https://" + oSystem.u_target_address + ".tpondemand.com/api/V1/" + inRecTypes + "/?take=1000&skip=0"};
             while ( JSUtil.notNil(jResponseBody.Next.toString()) ) {
@@ -973,8 +974,8 @@ TargetProcessLibrary.prototype = {
                         sItemName = jResponseBody.Items[i].Name;
                         sItemType = jResponseBody.Items[i].ResourceType;
                         nOwnerId    = 0;
-						sOwnerLogin = '';
-						sOwnerSysId = '';
+                        sOwnerLogin = '';
+                        sOwnerSysId = '';
                         if ( JSUtil.notNil(jResponseBody.Items[i].Owner) ) {
                             nOwnerId    = jResponseBody.Items[i].Owner.Id;
                             sOwnerLogin = jResponseBody.Items[i].Owner.Login;
@@ -1040,7 +1041,7 @@ TargetProcessLibrary.prototype = {
 
                 glider.u_active         = true;
                 glider.u_itemname       = inObject.ItemName;
-				glider.u_itemvalue      = inObject.ItemValue;
+                glider.u_itemvalue      = inObject.ItemValue;
                 glider.u_itemowner      = inObject.Owner;
                 glider.u_itemownerid    = inObject.OwnerId;
                 glider.u_itemownerlogin = inObject.OwnerLogin;
@@ -1090,7 +1091,7 @@ TargetProcessLibrary.prototype = {
         return output;
     },
 
-	//*********************************************************************************************
+    //*********************************************************************************************
     // get user record from sys_user table using email address
     //*********************************************************************************************
     _getUser : function(inEmail) {
@@ -1393,7 +1394,7 @@ TargetProcessLibrary.prototype = {
     //*********************************************************************************************
     //
     //*********************************************************************************************
-	_postPowerShell : function(inAction, inGroup, inUser) {
+    _postPowerShell : function(inAction, inGroup, inUser) {
         var sFunctionName = '_postPowerShell';
 
         this.aDebug.push(this._prefix(sFunctionName) + ' : Starting');
